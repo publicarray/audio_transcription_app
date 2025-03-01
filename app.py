@@ -24,7 +24,9 @@ st.set_page_config(
 def main():
     """Main function to run the Streamlit app."""
     
-    # Define speaker colors - using a list of RGB tuples
+    # Define speaker colors as RGB tuples for Streamlit
+    # We use tuples instead of RGBColor objects to avoid compatibility issues
+    # RGBColor objects will only be created when needed for the Word document
     speaker_colors = [
         (46, 134, 193),   # Blue
         (231, 76, 60),    # Red
@@ -38,12 +40,13 @@ def main():
         (230, 126, 34)    # Dark Orange
     ]
     
-    # Function to convert RGB tuple to hex color string
+    # Function to convert RGB tuple to hex color string for Streamlit display
     def rgb_to_hex(rgb):
+        """Convert RGB tuple to hex color string."""
         return f"#{rgb[0]:02x}{rgb[1]:02x}{rgb[2]:02x}"
     
     # App header
-    st.title("\U0001F399️ Audio Transcription App")
+    st.title("🎙️ Audio Transcription App")
     st.markdown("""
     This app transcribes audio files and identifies different speakers in the conversation.
     Upload an audio file (WAV or MP3), specify the number of speakers, and get a color-coded transcription.
@@ -129,13 +132,18 @@ def main():
                 
                 status_text.text("Creating document with transcription...")
                 progress_bar.progress(80)
-                progress_bar.progress(80)
                 
                 # Create the Word document
                 doc_creator = DocumentCreator()
-                # Override the speaker colors in DocumentCreator with our own colors
-                doc_creator.speaker_colors = [RGBColor(*rgb) for rgb in speaker_colors[:num_speakers]]
+                
+                # Convert our RGB tuples to RGBColor objects for the Word document
+                # This is where we handle the transition between our tuples and docx's RGBColor
+                doc_creator.speaker_colors = [
+                    RGBColor(rgb[0], rgb[1], rgb[2]) for rgb in speaker_colors[:num_speakers]
+                ]
+                
                 doc_creator.add_transcription(transcription_data)
+                
                 # Save the document to a BytesIO object
                 docx_file = io.BytesIO()
                 doc_creator.document.save(docx_file)
@@ -153,6 +161,7 @@ def main():
                 # Display speaker legend with colors
                 cols = st.columns(min(num_speakers, 5))
                 for i in range(min(num_speakers, len(speaker_colors))):
+                    # Use our utility function to convert RGB tuple to hex for Streamlit
                     hex_color = rgb_to_hex(speaker_colors[i])
                     cols[i % 5].markdown(
                         f"<span style='color:{hex_color};font-weight:bold;'>Speaker {i+1}</span>", 
@@ -161,7 +170,8 @@ def main():
                 
                 # Display transcription text
                 st.subheader("Text")
-                for text, speaker_id in transcription_data:
+                for text, speaker_id, start_time, end_time in transcription_data:
+                    # Convert RGB tuple to hex for Streamlit display
                     hex_color = rgb_to_hex(speaker_colors[speaker_id % len(speaker_colors)])
                     st.markdown(
                         f"<span style='color:{hex_color};font-weight:bold;'>Speaker {speaker_id + 1}:</span> {text}", 
@@ -199,6 +209,38 @@ def main():
             """)
 
 
+def check_environment():
+    """Check if the application is running in the correct Poetry environment."""
+    try:
+        import pkg_resources
+        
+        # Check for required packages
+        required_packages = ['streamlit', 'pydub', 'SpeechRecognition', 'python-docx']
+        missing_packages = []
+        
+        for package in required_packages:
+            try:
+                pkg_resources.get_distribution(package)
+            except pkg_resources.DistributionNotFound:
+                missing_packages.append(package)
+        
+        if missing_packages:
+            print(f"Warning: The following packages are missing: {', '.join(missing_packages)}")
+            print("Please install them using Poetry: poetry add " + " ".join(missing_packages))
+            return False
+            
+        return True
+    except Exception as e:
+        print(f"Error checking environment: {e}")
+        return False
+
+
 if __name__ == "__main__":
+    # Check if we're running in the correct Poetry environment
+    env_check = check_environment()
+    if env_check:
+        print("Environment check passed - all required packages are installed.")
+    
+    # Run the Streamlit app
     main()
 

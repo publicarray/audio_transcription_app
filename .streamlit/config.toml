@@ -1,0 +1,9 @@
+[global]
+developmentMode = false
+[theme]
+primaryColor = "#8db600"
+[client]
+showErrorDetails = "type"
+toolbarMode = "viewer"
+[browser]
+gatherUsageStats = false

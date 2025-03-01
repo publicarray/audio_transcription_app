@@ -1,0 +1,8 @@
+.env
+__pycache__
+build/
+transcription.docx
+dist/
+*.backup
+AppDir
+Audio_Transcription_App-x86_64.AppImage

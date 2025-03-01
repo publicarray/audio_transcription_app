@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Audio Transcription App
+Comment=Transcribe audio files with speaker identification
+Exec=audio_transcription_app.AppImage %f
+Icon=audio_transcription
+Terminal=false
+Categories=Audio;AudioVideo;Utility;
+Keywords=transcription;audio;speech;whisper;
+StartupNotify=true
+MimeType=audio/mp3;audio/wav;audio/flac;audio/ogg;audio/x-vorbis+ogg;audio/mpeg;
+
