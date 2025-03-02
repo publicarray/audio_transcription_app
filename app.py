@@ -263,7 +263,7 @@ def main():
             
             ## Option 2: Record Audio
             1. Select the 'Record Audio' tab
-            2. Click the 'Click to record' button to start recording
+            2. Click the 'Start Recording' button to start recording
             3. Click the button again to stop recording when finished
             4. Set the number of speakers using the slider in the sidebar
             5. Click the 'Transcribe Recording' button
