@@ -3838,6 +3838,22 @@ watchdog = {version = ">=2.1.5,<7", markers = "platform_system != \"Darwin\""}
 snowflake = ["snowflake-connector-python (>=3.3.0) ; python_version < \"3.12\"", "snowflake-snowpark-python[modin] (>=1.17.0) ; python_version < \"3.12\""]
 
 [[package]]
+name = "streamlit-audiorecorder"
+version = "0.0.6"
+description = "Audio recorder component for streamlit"
+optional = false
+python-versions = ">=3.6"
+groups = ["main"]
+files = [
+    {file = "streamlit_audiorecorder-0.0.6-py3-none-any.whl", hash = "sha256:a6f4fa16136d96ed8457768b9fe7e7745a3e1ba3fc50b85ad87b39f785e1a067"},
+    {file = "streamlit_audiorecorder-0.0.6.tar.gz", hash = "sha256:64b66c25b2b5e603cbea67b14074aaa7e93188913d7c83bbbc9f4d8ff237939d"},
+]
+
+[package.dependencies]
+pydub = ">=0.24"
+streamlit = ">=0.63"
+
+[[package]]
 name = "sympy"
 version = "1.13.3"
 description = "Computer algebra system (CAS) in Python"
@@ -4387,4 +4403,4 @@ propcache = ">=0.2.0"
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11,<3.12"
-content-hash = "c8b5182699556dc69e721d2aa2db3f2e63c8402cdc2133d19432c9799205c249"
+content-hash = "088189f750c875205e0dcb73c1f660b4eee26a4d72bb267ccb63e533ac3f02b3"
