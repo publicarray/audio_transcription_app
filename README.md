@@ -91,6 +91,12 @@ see https://github.com/pyannote/pyannote-audio/issues/1400#issuecomment-21447164
 sed -i s/lightning_fabric/lightning.fabric/g ~/.cache/pypoetry/virtualenvs/audio-transcription-app-96PhKkBZ-py3.11/lib/python3.11/site-packages/pyannote/audio/core/model.py
 ```
 
+### Create self singed Certificate for https
+
+```bash
+openssl req -x509 -newkey rsa:4096 -keyout certs/key.pem -out certs/cert.pem -sha256 -days 3650 -nodes -subj "/C=XX/CN=localhost"
+```
+
 ### Running the Application
 
 Start the Streamlit app using Poetry:
@@ -105,7 +111,8 @@ Or use the Poetry script:
 poetry run app
 ```
 
-The app will be available at http://localhost:8501 in your web browser.
+The app will be available at https://localhost:8501 in your web browser.
+
 
 ### Using the Application
 

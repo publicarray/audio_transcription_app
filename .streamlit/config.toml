@@ -7,3 +7,6 @@ showErrorDetails = "type"
 toolbarMode = "viewer"
 [browser]
 gatherUsageStats = false
+[server]
+sslCertFile = 'certs/cert.pem'
+sslKeyFile = 'certs/key.pem'

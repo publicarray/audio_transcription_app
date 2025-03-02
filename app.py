@@ -183,7 +183,7 @@ def main():
         st.markdown("Click the button below to start recording your audio. Click again to stop recording.")
         
         # Add audio recorder component
-        audio_bytes = audiorecorder("Click to record", "Recording...")
+        audio_bytes = audiorecorder()
         
         # If audio has been recorded (non-empty)
         if len(audio_bytes) > 0:
