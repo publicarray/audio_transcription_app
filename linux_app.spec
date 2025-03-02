@@ -44,7 +44,7 @@ hiddenimports += [
     'python-docx',
     'pkg_resources.py2_warn',
     'sklearn.metrics',
-    'sklearn.shutilneighbors.typedefs',
+    'sklearn.neighbors.typedefs',
     'torch.distributions',
     'scipy.special.cython_special',
     'dotenv',
