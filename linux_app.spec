@@ -3,6 +3,7 @@ from PyInstaller.utils.hooks import collect_all, collect_data_files, collect_sub
 import os
 import subprocess
 import sys
+import shutil
 
 block_cipher = None
 
@@ -19,17 +20,18 @@ ctranslate2_datas, ctranslate2_binaries, ctranslate2_hiddenimports = collect_all
 dotenv_datas, dotenv_binaries, dotenv_hiddenimports = collect_all('dotenv')
 lightning_fabric_datas = collect_data_files('lightning_fabric')
 speechbrain_datas, speechbrain_binaries, speechbrain_hiddenimports = collect_all('speechbrain')
+audiorecorder_datas, audiorecorder_binaries, audiorecorder_hiddenimports = collect_all('audiorecorder')
 
 # Combine all collected data
 datas = streamlit_datas + pyannote_datas + whisper_datas + pydub_datas + docx_datas + \
-        speech_recognition_datas + torch_datas + numpy_datas + ctranslate2_datas + dotenv_datas + speechbrain_datas + lightning_fabric_datas
+        speech_recognition_datas + torch_datas + numpy_datas + ctranslate2_datas + dotenv_datas + speechbrain_datas + lightning_fabric_datas + audiorecorder_datas
 datas += copy_metadata('streamlit')
 
 binaries = streamlit_binaries + pyannote_binaries + whisper_binaries + pydub_binaries + docx_binaries + \
-           speech_recognition_binaries + torch_binaries + numpy_binaries + ctranslate2_binaries + dotenv_binaries + speechbrain_binaries
+           speech_recognition_binaries + torch_binaries + numpy_binaries + ctranslate2_binaries + dotenv_binaries + speechbrain_binaries + audiorecorder_binaries
 
 hiddenimports = streamlit_hiddenimports + pyannote_hiddenimports + whisper_hiddenimports + pydub_hiddenimports + docx_hiddenimports + \
-                speech_recognition_hiddenimports + torch_hiddenimports + numpy_hiddenimports + ctranslate2_hiddenimports + dotenv_hiddenimports + speechbrain_hiddenimports
+                speech_recognition_hiddenimports + torch_hiddenimports + numpy_hiddenimports + ctranslate2_hiddenimports + dotenv_hiddenimports + speechbrain_hiddenimports + audiorecorder_hiddenimports
 
 # Add additional hidden imports that might be missed
 hiddenimports += [
@@ -42,7 +44,7 @@ hiddenimports += [
     'python-docx',
     'pkg_resources.py2_warn',
     'sklearn.metrics',
-    'sklearn.neighbors.typedefs',
+    'sklearn.shutilneighbors.typedefs',
     'torch.distributions',
     'scipy.special.cython_special',
     'dotenv',
@@ -54,6 +56,7 @@ hiddenimports += [
     'pytorch_lightning.utilities.seed',
     'lightning_fabric.utilities',
     'lightning_fabric.core',
+    'audiorecorder',
 ]
 
 # Include any data files needed
@@ -146,7 +149,6 @@ else:
         # Copy desktop file and icon
         desktop_file = 'audio_transcription_app.desktop'
         if os.path.exists(desktop_file):
-            import shutil
             shutil.copy(desktop_file, app_dir)
         else:
             # Create desktop file if it doesn't exist
